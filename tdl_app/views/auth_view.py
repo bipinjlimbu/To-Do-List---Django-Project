@@ -7,7 +7,7 @@ def login_view(request):
     errors = {}
 
     if request.method == 'POST':
-        identifier = request.POST.get('username')
+        identifier = request.POST.get('identifier')
         password = request.POST.get('password')
 
         if not identifier:
