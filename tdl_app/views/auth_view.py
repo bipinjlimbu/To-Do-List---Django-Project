@@ -19,7 +19,7 @@ def register_view(request):
 
         if not username:
             errors['username'] = 'Enter Your Username.'
-        elif len(username)<=3 and len(username)>=30:
+        elif len(username)<=3 or len(username)>=30:
             errors['username'] = 'Username Cannot be less than 3 or more than 30.'
         elif User.objects.filter(username=username).exists():
             errors['username'] = 'Username is already taken.'
@@ -45,13 +45,12 @@ def register_view(request):
 
         if not password:
             errors['password'] = 'Enter Your Password.'
-        elif password > 6:
+        elif len(password) < 6:
             errors['password'] = 'Password Needs to be More than 6.'
         
         if not confirm_password:
-            errors[confirm_password] = 'Confirm Your Password.'
-        
-        if password != confirm_password:
+            errors['confirm_password'] = 'Confirm Your Password.'
+        elif password != confirm_password:
             errors['general'] = 'Password does not match.'
 
         if errors:
@@ -63,7 +62,6 @@ def register_view(request):
                 last_name = last_name,
                 email = email,
                 password = password,
-                confirm_password = confirm_password,
             )
             user.save()
             messages.success(request,'Registration Successfull. You can Login Now.')
