@@ -1,12 +1,40 @@
 <html>
 <head>
-    <title>Home Page</title>
+    <title>To-Do List</title>
     {% load static %}
-<link  href ="{% static 'src/styles.css' %}" rel="stylesheet" />
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
 </head>
 
-<body>
-<h1 class="text-red-500" > Hello Home </h1>
-<p class="text-blue-600" >Hello k xa </p>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-start p-6">
+
+    <h1 class="text-4xl font-bold text-green-600 mb-6">My To-Do List</h1>
+
+    <!-- List of tasks -->
+    <ul class="w-full max-w-md space-y-2">
+        {% for task in tasks %}
+        <li class="flex justify-between items-center bg-white p-3 rounded shadow">
+            <span class="text-gray-700 {% if task.completed %}line-through text-gray-400{% endif %}">
+                {{ task.title }}
+            </span>
+            <div class="flex space-x-2">
+                <form method="POST" action="{% url 'toggle_task' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                        {% if task.completed %}Undo{% else %}Done{% endif %}
+                    </button>
+                </form>
+                <form method="POST" action="{% url 'delete_task' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+                </form>
+            </div>
+        </li>
+        {% empty %}
+        <li class="text-gray-500">No tasks yet!</li>
+        {% endfor %}
+    </ul>
+
 </body>
 </html>
