@@ -21,13 +21,13 @@ def login_view(request):
             if user is None:
                 try:
                     check = User.objects.get(email=identifier)
-                    user = authenticate(request, username=check, password=password)
+                    user = authenticate(request, username=check.username, password=password)
                 except User.DoesNotExist:
                     user = None
             
             if user is not None:
                 login(request,user)
-                messages.success('Login Successfull.')
+                messages.success(request,'Login Successfull.')
                 return redirect('index')
             else:
                 errors['general'] = 'Invalid Username/email or Password.'
@@ -84,7 +84,7 @@ def register_view(request):
         if errors:
             return render(request,'auth/register_page.html',{'errors':errors,'data':request.POST})
         else:
-            user = User(
+            user = User.objects.create_user(
                 username = username,
                 first_name = first_name,
                 last_name = last_name,
