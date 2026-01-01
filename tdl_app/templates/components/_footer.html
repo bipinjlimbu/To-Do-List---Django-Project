@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+    {% load static %}
+    <link href="{% static 'src/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+
+<!-- FOOTER START -->
+<footer class="bg-gray-900 text-gray-300 mt-10">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+            <!-- Brand -->
+            <div>
+                <h2 class="text-2xl font-bold text-green-500 mb-2">ToDoApp</h2>
+                <p class="text-sm text-gray-400">
+                    Simple and powerful task management app to organize your daily work.
+                </p>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h3 class="text-lg font-semibold mb-3 text-white">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{% url 'home' %}" class="hover:text-green-400">Home</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'login' %}" class="hover:text-green-400">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register' %}" class="hover:text-green-400">Register</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Auth Section -->
+            <div>
+                <h3 class="text-lg font-semibold mb-3 text-white">Account</h3>
+
+                {% if user.is_authenticated %}
+                    <p class="mb-2">Logged in as <strong>{{ user.username }}</strong></p>
+                    <a href="{% url 'logout' %}"
+                       class="inline-block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Logout
+                    </a>
+                {% else %}
+                    <p class="mb-2">You are not logged in</p>
+                    <a href="{% url 'login' %}"
+                       class="inline-block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Login
+                    </a>
+                {% endif %}
+            </div>
+
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-gray-700 mt-8 pt-4 text-center text-sm text-gray-400">
+            © {{ now|date:"Y" }} ToDoApp. All rights reserved.
+        </div>
+
+    </div>
+</footer>
+<!-- FOOTER END -->
+
+</body>
+</html>
