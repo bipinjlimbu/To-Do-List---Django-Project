@@ -4,7 +4,35 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 def login_view(request):
-    return render(request,'auth/login_page.html')
+    errors = {}
+
+    if request.method == 'POST':
+        identifier = request.POST.get('username')
+        password = request.POST.get('password')
+
+        if not identifier:
+            errors['identifier'] = 'Enter Your Username or Email.'
+
+        if not password:
+            errors['password'] = 'Enter Your Password.'
+
+        if not errors:
+            user = authenticate(request,username=identifier,password=password)
+            if user is None:
+                try:
+                    check = User.objects.get(email=identifier)
+                    user = authenticate(request, username=check, password=password)
+                except User.DoesNotExist:
+                    user = None
+            
+            if user is not None:
+                login(request,user)
+                messages.success('Login Successfull.')
+                return redirect('index')
+            else:
+                errors['general'] = 'Invalid Username/email or Password.'
+        
+    return render(request,'auth/login_page.html',{'errors':errors,'data':request.POST})
 
 def register_view(request):
     errors = {}
