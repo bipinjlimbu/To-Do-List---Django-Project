@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from ..models import todolist
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def index_view(request):
     if request.user.is_authenticated:
@@ -9,6 +10,7 @@ def index_view(request):
         tdl = []
     return render(request,'main/index.html',{'tasks': tdl})
 
+@login_required
 def add_task(request):
     errors = {}
 
@@ -39,8 +41,10 @@ def add_task(request):
         
     return render(request,'main/add_task.html')
 
+@login_required
 def toggle_task(request):
     return render(request,'main/index.html')
 
+@login_required
 def delete_task(request):
     return render(request,'main/index.html')
