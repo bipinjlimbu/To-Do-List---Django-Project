@@ -8,7 +8,7 @@ urlpatterns = [
     path('register/',register_view,name='register'),
     path('logout/',logout_view,name='logout'),
     path('add_task/',add_task,name='add_task'),
-    path('toggle_task/',toggle_task,name='toggle_task'),
-    path('delete_task/',delete_task,name='delete_task'),
+    path('toggle_task/<int:task_id>/',toggle_task,name='toggle_task'),
+    path('delete_task/<int:task_id>/',delete_task,name='delete_task'),
 
 ]

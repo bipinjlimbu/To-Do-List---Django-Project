@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from ..models import todolist
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -42,9 +42,18 @@ def add_task(request):
     return render(request,'main/add_task.html')
 
 @login_required
-def toggle_task(request):
-    return render(request,'main/index.html')
+def toggle_task(request, task_id):
+    task = get_object_or_404(todolist, id = task_id, user = request.user)
+
+    task.completed = not task.completed
+    task.save()
+
+    return redirect('index')
 
 @login_required
-def delete_task(request):
-    return render(request,'main/index.html')
+def delete_task(request, task_id):
+    task = get_object_or_404(todolist, id = task_id, user = request.user)
+
+    task.delete()
+
+    return redirect('index')
