@@ -97,3 +97,7 @@ def register_view(request):
     
     else:
         return render(request,'auth/register_page.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
