@@ -38,3 +38,9 @@ def add_task(request):
             return redirect('index')
         
     return render(request,'main/add_task.html')
+
+def toggle_task(request):
+    return render(request,'main/index.html')
+
+def delete_task(request):
+    return render(request,'main/index.html')
