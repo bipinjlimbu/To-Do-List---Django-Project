@@ -30,7 +30,7 @@
             <table class="min-w-full bg-white rounded shadow overflow-hidden">
                 <thead class="bg-green-500 text-white">
                     <tr>
-                        <th class="px-4 py-2 text-left">ID</th>
+                        <th class="px-4 py-2 text-left">SN</th>
                         <th class="px-4 py-2 text-left">Title</th>
                         <th class="px-4 py-2 text-left">Description</th>
                         <th class="px-4 py-2 text-center">Completed</th>
@@ -41,7 +41,7 @@
                     {% if request.user.is_authenticated %}
                     {% for task in tasks %}
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="px-4 py-2">{{ task.id }}</td>
+                            <td class="px-4 py-2">{{ forloop.counter }}</td>
                             <td class="px-4 py-2 {% if task.completed %}line-through text-gray-400{% endif %}">
                                 {{ task.title }}
                             </td>
