@@ -25,38 +25,63 @@
             My To-Do List
         </h1>
 
-        <!-- List of tasks -->
-        <ul class="w-full max-w-md space-y-2">
-            {% for task in tasks %}
-                <li class="flex justify-between items-center bg-white p-3 rounded shadow">
-                    <span class="text-gray-700 {% if task.completed %}line-through text-gray-400{% endif %}">
-                        {{ task.title }}
-                    </span>
+        <!-- Task Table -->
+        <div class="overflow-x-auto w-full max-w-4xl">
+            <table class="min-w-full bg-white rounded shadow overflow-hidden">
+                <thead class="bg-green-500 text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-left">ID</th>
+                        <th class="px-4 py-2 text-left">Title</th>
+                        <th class="px-4 py-2 text-left">Description</th>
+                        <th class="px-4 py-2 text-center">Completed</th>
+                        <th class="px-4 py-2 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-2">{{ task.id }}</td>
+                            <td class="px-4 py-2 {% if task.completed %}line-through text-gray-400{% endif %}">
+                                {{ task.title }}
+                            </td>
+                            <td class="px-4 py-2 {% if task.completed %}line-through text-gray-400{% endif %}">
+                                {{ task.description }}
+                            </td>
+                            <td class="px-4 py-2 text-center">
+                                {% if task.completed %}
+                                    ✅
+                                {% else %}
+                                    ❌
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 text-center flex justify-center space-x-2">
+                                <form method="POST" action="{% url 'toggle_task' task.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
+                                        {% if task.completed %}Undo{% else %}Done{% endif %}
+                                    </button>
+                                </form>
 
-                    <div class="flex space-x-2">
-                        <form method="POST" action="{% url 'toggle_task' task.id %}">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">
-                                {% if task.completed %}Undo{% else %}Done{% endif %}
-                            </button>
-                        </form>
-
-                        <form method="POST" action="{% url 'delete_task' task.id %}">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
-                                Delete
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            {% empty %}
-                <li class="text-gray-500 text-center">
-                    No tasks yet!
-                </li>
-            {% endfor %}
-        </ul>
+                                <form method="POST" action="{% url 'delete_task' task.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-gray-500 py-4">
+                                No tasks yet!
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
     </main>
 
