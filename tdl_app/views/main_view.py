@@ -3,7 +3,8 @@ from ..models import todolist
 from django.contrib import messages
 
 def index_view(request):
-    return render(request,'main/index.html')
+    tdl = todolist.objects.all()
+    return render(request,'main/index.html',{'tasks': tdl})
 
 def add_task(request):
     errors = {}

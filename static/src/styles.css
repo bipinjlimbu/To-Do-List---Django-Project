@@ -813,6 +813,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .line-through {
   text-decoration: line-through;
 }
