@@ -12,6 +12,8 @@
     {% endfor %}
     {% endif %}
 
+    {% include 'components/_navbar.html' %}
+
     <h1 class="text-4xl font-bold text-green-600 mb-6">My To-Do List</h1>
 
     <!-- List of tasks -->
@@ -40,6 +42,8 @@
         <li class="text-gray-500">No tasks yet!</li>
         {% endfor %}
     </ul>
+
+    {% include 'components/_footer.html' %}
 
 </body>
 </html>

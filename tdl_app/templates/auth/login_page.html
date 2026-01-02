@@ -6,6 +6,7 @@
 </head>
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    {% include 'components/_navbar.html' %}
     {% if messages %}
     {% for message in messages %}
     <script> alert("{{message}}") </script>
@@ -45,5 +46,6 @@
         </p>
     </div>
 
+    {% include 'components/_footer.html' %}
 </body>
 </html>
