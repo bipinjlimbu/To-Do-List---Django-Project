@@ -22,18 +22,21 @@
             </div>
 
             <!-- Desktop Links -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="{% url 'index' %}" class="text-gray-700 hover:text-green-600 font-medium">
-                    Home
-                </a>
-                <a href="" class="text-gray-700 hover:text-green-600 font-medium">
-                    Tasks
-                </a>
+            <div class="hidden md:flex items-center space-x-4">
 
                 {% if user.is_authenticated %}
+                    <!-- Greeting -->
                     <span class="text-gray-600">
                         Hi, <strong>{{ user.username }}</strong>
                     </span>
+
+                    <!-- Add Task Button -->
+                    <a href="{% url 'add_task' %}"
+                       class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+                        Add Task
+                    </a>
+
+                    <!-- Logout -->
                     <a href="{% url 'logout' %}" onclick="return confirm('Are You Sure You Wanna Logout?')"
                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
                         Logout
@@ -47,25 +50,29 @@
                         Register
                     </a>
                 {% endif %}
+
             </div>
 
             <!-- Mobile Button -->
             <div class="md:hidden">
                 <button id="menu-btn" class="text-2xl">☰</button>
             </div>
+
         </div>
     </div>
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
-        <a href="{% url 'index' %}" class="block text-gray-700 hover:text-green-600">
-            Home
-        </a>
-        <a href="" class="block text-gray-700 hover:text-green-600">
-            Tasks
-        </a>
-
         {% if user.is_authenticated %}
+            <span class="block text-gray-600">Hi, <strong>{{ user.username }}</strong></span>
+
+            <!-- Mobile Add Task -->
+            <a href="{% url 'add_task' %}"
+               class="block w-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                Add Task
+            </a>
+
+            <!-- Logout -->
             <a href="{% url 'logout' %}" onclick="return confirm('Are You Sure You Wanna Logout?')"
                class="block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
                 Logout
@@ -74,8 +81,7 @@
             <a href="{% url 'login' %}" class="block text-gray-700 hover:text-green-600">
                 Login
             </a>
-            <a href="{% url 'register' %}"
-               class="block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            <a href="{% url 'register' %}" class="block bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
                 Register
             </a>
         {% endif %}
