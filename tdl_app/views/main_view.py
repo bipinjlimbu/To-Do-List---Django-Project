@@ -3,7 +3,10 @@ from ..models import todolist
 from django.contrib import messages
 
 def index_view(request):
-    tdl = todolist.objects.all()
+    if request.user.is_authenticated:
+        tdl = todolist.objects.filter(user=request.user)
+    else:
+        tdl = []
     return render(request,'main/index.html',{'tasks': tdl})
 
 def add_task(request):
